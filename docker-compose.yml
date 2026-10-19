@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: pocketledger-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: pocketledger_db
+      POSTGRES_USER: pocketledger
+      POSTGRES_PASSWORD: PocketLedgerDev123!
+    ports:
+      - "5433:5432"
+    volumes:
+      - pocketledger_pgdata:/var/lib/postgresql/data
+volumes:
+  pocketledger_pgdata:
