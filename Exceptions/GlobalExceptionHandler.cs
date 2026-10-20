@@ -13,7 +13,7 @@ namespace income_expense_tracker.Exception
         }
 
 
-        public ValueTask<bool> TryHandleAsync(HttpContext httpContext, System.Exception exception, CancellationToken cancellationToken)
+        public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, System.Exception exception, CancellationToken cancellationToken)
         {
             var (status, title, detail) = exception switch
             {
@@ -47,18 +47,28 @@ namespace income_expense_tracker.Exception
                 _logger.LogError(
                       exception,
                       "Request failed at {Path}",
-                      context.Request.Path
+                      httpContext.Request.Path
                     );
             }
             else
             {
                 _logger.LogWarning(
-               exception,
-               "Request error at {Path}",
-               context.Request.Path
+                    exception,
+                    "Request error at {Path}",
+                    httpContext.Request.Path
                 );
             }
+            await Results.Problem(
+                statusCode: status,
+                title:title,
+                detail:detail,
+                extensions: new Dictionary<string,object?>
+                {
+                    ["traceId"] = httpContext.TraceIdentifier
+                }
+                ).ExecuteAsync(httpContext);
 
+            return true;
 
         }
     }

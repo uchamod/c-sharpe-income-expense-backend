@@ -18,11 +18,12 @@ namespace income_expense_tracker.Repositories
             return t;
         }
 
-        public void DeleteAsync(Transaction t) =>
-        
-            _context.transactions.Remove(t);
-        
+        public void DeleteAsync(Transaction t)
+        {
 
+            _context.transactions.Remove(t);
+
+        }
         public Task<List<Transaction>> GetAllAsync() =>
         
             _context.transactions.AsNoTracking()

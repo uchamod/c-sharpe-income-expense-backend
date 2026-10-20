@@ -1,4 +1,5 @@
 using income_expense_tracker.Data;
+using income_expense_tracker.Exception;
 using income_expense_tracker.Repositories;
 using income_expense_tracker.Services;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,7 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-var connectionString = builder.Configuration.GetConnectionString("Postgres") 
+var connectionString = builder.Configuration.GetConnectionString("Postgres")
     ?? throw new InvalidOperationException("Missing ConnectionStrings:Postgres. Configure user secrets or environment variables.");
 
 builder.Services.AddDbContext<TransactionDbContext>(options =>
@@ -20,8 +21,14 @@ builder.Services.AddDbContext<TransactionDbContext>(options =>
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<ITranscationService, TransactionService>();
 
+//exception haddler
+builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
+
 var app = builder.Build();
 
+app.UseExceptionHandler();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -33,6 +40,8 @@ else
 }
 
 //app.UseAuthorization();
+
+
 
 app.MapControllers();
 
