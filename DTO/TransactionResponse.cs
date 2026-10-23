@@ -7,7 +7,7 @@
         decimal Amount,
         string Type,
         long Date,
-        string? Remarks
+        string? Remark
         );
     
 
