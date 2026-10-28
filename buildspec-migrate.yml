@@ -1,0 +1,22 @@
+
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      dotnet: 10.0
+    commands:
+      - dotnet tool install --global dotnet-ef --version 10.0.13
+
+  pre_build:
+    commands:
+      - echo "Preparing EF Core migrations..."
+      - dotnet restore income_expense_tracker.csproj
+
+  build:
+    commands:
+      - echo "Applying pending migrations to RDS..."
+      - dotnet ef database update --project income_expense_tracker.csproj
+      - echo "Migration stage completed."
+
+
