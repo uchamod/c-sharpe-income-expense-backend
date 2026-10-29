@@ -1,5 +1,6 @@
 ﻿namespace income_expense_tracker.Models
 {
+    //transaction model class
     public sealed class Transaction
     {
         public long Id { get; set; }

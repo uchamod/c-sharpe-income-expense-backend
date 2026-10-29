@@ -1,5 +1,5 @@
 ﻿using income_expense_tracker.DTO;
-
+//transcation service
 namespace income_expense_tracker.Services
 {
     public interface ITranscationService

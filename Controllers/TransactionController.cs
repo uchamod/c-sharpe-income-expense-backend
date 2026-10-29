@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace income_expense_tracker.Controllers
 {
     [ApiController]
-    [Route("api/transcation")]
+    [Route("v1/api/transcations")]
     public class TransactionController : ControllerBase
     {
         private readonly ITranscationService _transcationService;

@@ -1,5 +1,6 @@
 ﻿namespace income_expense_tracker.DTO
 {
+    //custom rresponse class for transaction
     public sealed record TransactionResponse(
         long Id,
         string Title,
